@@ -38,25 +38,25 @@ public class TestSpider  {
 	public void testCrawl() {
         Spider spider = new Spider(2);
 		spider.crawl(BEGINNING_URL);
-		
+
 		assertEquals(2, spider.getFinished().size());
 		assertTrue(spider.getFinished().contains(BEGINNING_URL));
 		assertTrue(spider.getWork().size() > 10);
-		
+
 		for (String url : spider.getWork()) {
 			url = url.toLowerCase();
 			assertFalse(url.endsWith(".jpg"));
 			assertFalse(url.endsWith(".png"));
 			assertFalse(url.endsWith(".gif"));
 		}
-		
+
 		int i = 0;
 		for (WordCount urlCount : spider.getUrlCounts()) {
 			i += urlCount.getCount();
 		}
 		assertTrue(i >= 10);
 	}
-	
+
 	
 
 }

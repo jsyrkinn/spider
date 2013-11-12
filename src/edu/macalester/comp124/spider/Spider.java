@@ -56,14 +56,20 @@ public class Spider {
 	 * @param beginningUrl
 	 */
 	public void crawl(String beginningUrl) {
-        // add the first item to the queue
+        work.add(beginningUrl);
 		
 		while(finished.size() < maxUrls) {
             // Get the next item from the queue
 		    String url = work.poll();
 		    if(url == null)
 		        break;
-
+            for (String finishedUrl : finished){
+                processPage(finishedUrl);
+                if (!finishedUrl.equalsIgnoreCase(url)){
+                    finished.add(finishedUrl);
+                }
+                urlCounter.countWord(url);
+            }
             // process the page and mark it as finished
 		}
 	}
@@ -80,7 +86,8 @@ public class Spider {
 		
         for (String link : helper.extractLinks(url, html)) {
             if (!helper.isImage(link)) {
-                // Your work goes here
+                work.add(link);
+
             }
         }
 	}
